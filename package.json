@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "[![Actions Status](https://github.com/ChemicalWitness/fullstack-javascript-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/ChemicalWitness/fullstack-javascript-project-46/actions)",
-  "main": "index.js",
+  "main": "bin/gendiff.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,5 +14,10 @@
   "type": "module",
   "bin": {
     "gendiff": "./gendiff.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.31.0"
   }
 }
