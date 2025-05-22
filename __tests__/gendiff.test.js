@@ -13,7 +13,13 @@ describe('gendiff', () => {
     const file1 = getFixturePath('file1.json')
     const file2 = getFixturePath('file2.json')
     const expected = fs.readFileSync(getFixturePath('expected_diff.txt'), 'utf-8').trim()
-    console.log(expected)
+    expect(checkPath(file1, file2)).toEqual(expected)
+  })
+
+  test('should show differences between two flat YAML files', () => {
+    const file1 = getFixturePath('file1.yaml')
+    const file2 = getFixturePath('file2.yaml')
+    const expected = fs.readFileSync(getFixturePath('expected_diff.txt'), 'utf-8').trim()
     expect(checkPath(file1, file2)).toEqual(expected)
   })
 })
