@@ -4,7 +4,8 @@
   "description": "[![Actions Status](https://github.com/ChemicalWitness/fullstack-javascript-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/ChemicalWitness/fullstack-javascript-project-46/actions)",
   "main": "bin/gendiff.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "author": "",
   "license": "ISC",
