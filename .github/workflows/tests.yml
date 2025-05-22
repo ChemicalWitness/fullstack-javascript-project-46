@@ -1,5 +1,7 @@
 name: run-tests and lint
 on: push
+env:
+  CI: true
 jobs:
   test-lint:
     runs-on: ubuntu-latest
@@ -8,3 +10,7 @@ jobs:
       - run: npm ci
       - run: make lint
       - run: npx vitest
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
