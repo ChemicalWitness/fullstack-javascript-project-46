@@ -10,6 +10,7 @@ jobs:
       - run: npm ci
       - run: make lint
       - run: npx vitest
+      - run: npx vitest --coverage
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
