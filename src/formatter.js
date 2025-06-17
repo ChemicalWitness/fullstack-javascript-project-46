@@ -1,29 +1,29 @@
-import { nodeTypes } from "./gendiff.js";
+import { nodeTypes } from './gendiff.js'
 
 const stringify = (value, depth) => {
   if (value === null) {
-    return 'null';
+    return 'null'
   }
   if (typeof value !== 'object') {
-    return String(value);
+    return String(value)
   }
 
-  const indentSize = depth * 4;
-  const currentIndent = ' '.repeat(indentSize);
-  const bracketIndent = ' '.repeat(indentSize - 4);
+  const indentSize = depth * 4
+  const currentIndent = ' '.repeat(indentSize)
+  const bracketIndent = ' '.repeat(indentSize - 4)
   const lines = Object.entries(value).map(
-    ([key, val]) => `${currentIndent}${key}: ${stringify(val, depth + 1)}`
-  );
+    ([key, val]) => `${currentIndent}${key}: ${stringify(val, depth + 1)}`,
+  )
 
-  return ['{', ...lines, `${bracketIndent}}`].join('\n');
-};
+  return ['{', ...lines, `${bracketIndent}}`].join('\n')
+}
 
 const formatter = (nodes, depth = 1, format) => {
   console.log(format)
   if (format === 'stylish') {
-    const indentSize = depth * 4;
-    const currentIndent = ' '.repeat(indentSize - 2);
-    const bracketIndent = ' '.repeat(indentSize - 4);
+    const indentSize = depth * 4
+    const currentIndent = ' '.repeat(indentSize - 2)
+    const bracketIndent = ' '.repeat(indentSize - 4)
     const diff = nodes.flatMap((node) => {
       switch (node.type) {
         case nodeTypes.REMOVE:
@@ -46,4 +46,4 @@ const formatter = (nodes, depth = 1, format) => {
   }
 }
 
-export default formatter;
+export default formatter

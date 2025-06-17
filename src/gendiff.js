@@ -4,7 +4,7 @@ import { parse, getFormat, readFile } from './parse.js'
 import formatter from './formatter.js'
 
 const nodeTypes = {
-  ADDED: "added",
+  ADDED: 'added',
   REMOVE: 'remove',
   CHANGE: 'change',
   UNCHANGED: 'unchanged',
@@ -37,7 +37,7 @@ const buildDiff = (data1, data2) => {
       return { type: nodeTypes.ADDED, key, valueObj2 }
     }
     if (_.isObject(valueObj1) && _.isObject(valueObj2)) {
-      return { type: nodeTypes.NESTED, key, children: buildDiff(valueObj1, valueObj2)}
+      return { type: nodeTypes.NESTED, key, children: buildDiff(valueObj1, valueObj2) }
     }
     if (!_.isEqual(valueObj1, valueObj2)) {
       return { type: nodeTypes.CHANGE, key, valueObj1, valueObj2 }
