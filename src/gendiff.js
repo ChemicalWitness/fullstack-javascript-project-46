@@ -15,7 +15,6 @@ const gendiff = (filepath1, filepath2, format = 'stylish') => {
   const data1 = parse(readFile(filepath1), getFormat(filepath1))
   const data2 = parse(readFile(filepath2), getFormat(filepath2))
   const diff = buildDiff(data1, data2)
-  console.log(format)
   return formatter(diff, 1, format)
 }
 
@@ -47,7 +46,6 @@ const buildDiff = (data1, data2) => {
     }
   })
 
-  // console.log(diffLines)
   return diffLines
 }
 

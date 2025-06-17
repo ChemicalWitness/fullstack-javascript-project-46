@@ -18,32 +18,36 @@ const stringify = (value, depth) => {
   return ['{', ...lines, `${bracketIndent}}`].join('\n')
 }
 
-const formatter = (nodes, depth = 1, format) => {
-  console.log(format)
-  if (format === 'stylish') {
-    const indentSize = depth * 4
-    const currentIndent = ' '.repeat(indentSize - 2)
-    const bracketIndent = ' '.repeat(indentSize - 4)
-    const diff = nodes.flatMap((node) => {
-      switch (node.type) {
-        case nodeTypes.REMOVE:
-          return `${currentIndent}- ${node.key}: ${stringify(node.valueObj1, depth + 1)}`
-        case nodeTypes.ADDED:
-          return `${currentIndent}+ ${node.key}: ${stringify(node.valueObj2, depth + 1)}`
-        case nodeTypes.CHANGE:
-          return [
-            `${currentIndent}- ${node.key}: ${stringify(node.valueObj1, depth + 1)}`,
-            `${currentIndent}+ ${node.key}: ${stringify(node.valueObj2, depth + 1)}`,
-          ]
-        case nodeTypes.NESTED:
-          return `${currentIndent}  ${node.key}: ${formatter(node.children, depth + 1)}`
-        default:
-          return `${currentIndent}  ${node.key}: ${stringify(node.valueObj2, depth + 1)}`
-      }
-    })
+const formatStylish = (nodes, depth = 1) => {
+  const indentSize = depth * 4
+  const currentIndent = ' '.repeat(indentSize - 2)
+  const bracketIndent = ' '.repeat(indentSize - 4)
+  const diff = nodes.flatMap((node) => {
+    switch (node.type) {
+      case nodeTypes.REMOVE:
+        return `${currentIndent}- ${node.key}: ${stringify(node.valueObj1, depth + 1)}`
+      case nodeTypes.ADDED:
+        return `${currentIndent}+ ${node.key}: ${stringify(node.valueObj2, depth + 1)}`
+      case nodeTypes.CHANGE:
+        return [
+          `${currentIndent}- ${node.key}: ${stringify(node.valueObj1, depth + 1)}`,
+          `${currentIndent}+ ${node.key}: ${stringify(node.valueObj2, depth + 1)}`,
+        ]
+      case nodeTypes.NESTED:
+        return `${currentIndent}  ${node.key}: ${formatter(node.children, depth + 1)}`
+      default:
+        return `${currentIndent}  ${node.key}: ${stringify(node.valueObj2, depth + 1)}`
+    }
+  })
 
-    return [`{`, ...diff, `${bracketIndent}}`].join('\n')
+  return [`{`, ...diff, `${bracketIndent}}`].join('\n')
+}
+
+const formatter = (nodes, depth, format = 'stylish') => {
+  if (format != 'stylish') {
+    throw new Error('Uncorrect format')
   }
+  return formatStylish(nodes, depth)
 }
 
 export default formatter
