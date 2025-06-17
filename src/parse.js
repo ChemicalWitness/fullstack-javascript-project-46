@@ -23,4 +23,9 @@ const getFormat = (filepath) => {
   return ext
 }
 
-export { readFile, parse, getFormat }
+const getData = (filepath) => {
+  const data = parse(readFile(filepath), getFormat(filepath))
+  return data
+}
+
+export { readFile, parse, getFormat, getData }

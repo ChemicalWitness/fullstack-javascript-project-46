@@ -1,35 +1,54 @@
 import _ from 'lodash'
 import { Command } from 'commander'
 import { parse, getFormat, readFile } from './parse.js'
+import formatter from './formatter.js'
 
-const checkPath = (filepath1, filepath2) => {
+const nodeTypes = {
+  ADDED: "added",
+  REMOVE: 'remove',
+  CHANGE: 'change',
+  UNCHANGED: 'unchanged',
+  NESTED: 'nested',
+}
+
+const gendiff = (filepath1, filepath2, format = 'stylish') => {
   const data1 = parse(readFile(filepath1), getFormat(filepath1))
   const data2 = parse(readFile(filepath2), getFormat(filepath2))
-  // console.log(data1);
-  // console.log(data2);
+  const diff = buildDiff(data1, data2)
+  console.log(format)
+  return formatter(diff, 1, format)
+}
+
+const buildDiff = (data1, data2) => {
   const keysObj1 = Object.keys(data1)
   const keysObj2 = Object.keys(data2)
 
   const uniqKeys = _.sortBy(Array.from(new Set([...keysObj1, ...keysObj2])))
   const diffLines = uniqKeys.map((key) => {
+    const hasKeyInObj1 = keysObj1.includes(key)
+    const hasKeyInObj2 = keysObj2.includes(key)
     const valueObj1 = data1[key]
     const valueObj2 = data2[key]
 
-    if (!_.has(data2, key)) {
-      return `  - ${key}: ${valueObj1}`
+    if (!hasKeyInObj2) {
+      return { type: nodeTypes.REMOVE, key, valueObj1 }
     }
-    if (!_.has(data1, key)) {
-      return `  + ${key}: ${valueObj2}`
+    if (!hasKeyInObj1) {
+      return { type: nodeTypes.ADDED, key, valueObj2 }
+    }
+    if (_.isObject(valueObj1) && _.isObject(valueObj2)) {
+      return { type: nodeTypes.NESTED, key, children: buildDiff(valueObj1, valueObj2)}
     }
     if (!_.isEqual(valueObj1, valueObj2)) {
-      return `  - ${key}: ${valueObj1}\n  + ${key}: ${valueObj2}`
+      return { type: nodeTypes.CHANGE, key, valueObj1, valueObj2 }
     }
-    return `    ${key}: ${valueObj1}`
+    if (valueObj1 === valueObj2) {
+      return { type: nodeTypes.UNCHANGED, key, valueObj2 }
+    }
   })
 
-  const result = `{\n${diffLines.join('\n')}\n}`
-  console.log(result)
-  return result
+  // console.log(diffLines)
+  return diffLines
 }
 
 const runCommander = () => {
@@ -39,12 +58,12 @@ const runCommander = () => {
     .name('gendiff')
     .description('Compares two configuration files and shows a difference.')
     .version('1.0.0', '-V, --version', 'output the version number')
-    .option('-f, --format [type]', 'output format')
+    .option('-f, --format <type>', 'output format', 'stylish')
     .arguments('<filepath1> <filepath2>')
     .helpOption('-h, --help', 'display help for command')
-    .action((filepath1, filepath2) => checkPath(filepath1, filepath2))
+    .action((filepath1, filepath2, options) => console.log(gendiff(filepath1, filepath2, options.format)))
 
   return program
 }
 
-export { checkPath, runCommander }
+export { gendiff, runCommander, nodeTypes }

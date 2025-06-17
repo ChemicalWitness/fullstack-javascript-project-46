@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
 import fs from 'fs'
-import { checkPath } from '../src/gendiff.js'
+import { gendiff } from '../src/gendiff.js'
 import { describe, expect, test } from 'vitest'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -13,13 +13,20 @@ describe('gendiff', () => {
     const file1 = getFixturePath('file1.json')
     const file2 = getFixturePath('file2.json')
     const expected = fs.readFileSync(getFixturePath('expected_diff.txt'), 'utf-8').trim()
-    expect(checkPath(file1, file2)).toEqual(expected)
+    expect(gendiff(file1, file2)).toEqual(expected)
+  })
+
+  test('should show differences between two JSON files', () => {
+    const file1 = getFixturePath('file1.1.json')
+    const file2 = getFixturePath('file2.1.json')
+    const expected = fs.readFileSync(getFixturePath('expected_diff2.txt'), 'utf-8').trim()
+    expect(gendiff(file1, file2)).toEqual(expected)
   })
 
   test('should show differences between two flat YAML files', () => {
     const file1 = getFixturePath('file1.yaml')
     const file2 = getFixturePath('file2.yaml')
     const expected = fs.readFileSync(getFixturePath('expected_diff.txt'), 'utf-8').trim()
-    expect(checkPath(file1, file2)).toEqual(expected)
+    expect(gendiff(file1, file2)).toEqual(expected)
   })
 })
