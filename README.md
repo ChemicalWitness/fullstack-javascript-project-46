@@ -9,8 +9,11 @@
 Use NODE.JS 20.8 or higher
 
 #### Example
-##### JSON
+##### FLAT JSON
 [![asciicast](https://asciinema.org/a/EmHOLm2mNjCkGoIGTXNLoq66b.svg)](https://asciinema.org/a/EmHOLm2mNjCkGoIGTXNLoq66b)
 
-##### YAML
+##### FLAT YAML
 [![asciicast](https://asciinema.org/a/uV0Wsgk3cz4rUod22AiwB3bh2.svg)](https://asciinema.org/a/uV0Wsgk3cz4rUod22AiwB3bh2)
+
+##### NESTED JSON
+[![asciicast](https://asciinema.org/a/EACYC0XXheetf06roNUfh2B5n.svg)](https://asciinema.org/a/EACYC0XXheetf06roNUfh2B5n)
