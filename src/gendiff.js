@@ -59,7 +59,15 @@ const runCommander = () => {
     .option('-f, --format <type>', 'output format', 'stylish')
     .arguments('<filepath1> <filepath2>')
     .helpOption('-h, --help', 'display help for command')
-    .action((filepath1, filepath2, options) => console.log(gendiff(filepath1, filepath2, options.format)))
+    .action((filepath1, filepath2, options) => {
+      try {
+        console.log(gendiff(filepath1, filepath2, options.format))
+      }
+      catch (err) {
+        console.error(err)
+        return
+      }
+    })
 
   return program
 }
