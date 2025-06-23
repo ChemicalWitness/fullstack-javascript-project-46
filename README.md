@@ -5,14 +5,16 @@
 # fullstack-javascript-project-46
 # Gendiff
 ## Formats:
-### -f stylish
-### -f plain
-### -f json
+#### -f stylish
+#### -f plain
+#### -f json
 
 ## Requirements:
 Use NODE.JS 20.8 or higher
 
 #### Example
+[![asciicast](https://asciinema.org/a/3heOBGUbi6SXcidFul97j4ffC.svg)](https://asciinema.org/a/3heOBGUbi6SXcidFul97j4ffC)
+
 ##### FLAT JSON
 [![asciicast](https://asciinema.org/a/EmHOLm2mNjCkGoIGTXNLoq66b.svg)](https://asciinema.org/a/EmHOLm2mNjCkGoIGTXNLoq66b)
 
