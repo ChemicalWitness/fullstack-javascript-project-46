@@ -7,7 +7,7 @@ const stringifyPlain = (value) => {
   if (typeof value === 'object') {
     return `[complex value]`
   }
-  return typeof value === 'boolean' ? `${value}` : `'${value}'`
+  return typeof value !== 'string' ? `${value}` : `'${value}'`
 }
 
 const buildPath = (path, key) => path ? `${path}.${key}` : key
