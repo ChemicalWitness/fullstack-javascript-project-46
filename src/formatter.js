@@ -2,7 +2,6 @@ import formatStylish from './formatters/stylelish.js'
 import formatPlain from './formatters/plain.js'
 
 const formatter = (nodes, depth, format = 'stylish') => {
-  console.log(format)
   if (format === 'plain') {
     return formatPlain(nodes)
   }
