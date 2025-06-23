@@ -17,3 +17,6 @@ Use NODE.JS 20.8 or higher
 
 ##### NESTED JSON
 [![asciicast](https://asciinema.org/a/EACYC0XXheetf06roNUfh2B5n.svg)](https://asciinema.org/a/EACYC0XXheetf06roNUfh2B5n)
+
+##### FORMAT PLAIN & STYLISH
+[![asciicast](https://asciinema.org/a/41sgSo64a5sHYEdVSOukOaC1z.svg)](https://asciinema.org/a/41sgSo64a5sHYEdVSOukOaC1z)

@@ -8,7 +8,6 @@ const readFile = (filepath) => {
 }
 
 const parse = (file, format) => {
-  // return format === 'json' ? JSON.parse(file) : new Error('Invalid format')
   if (format === 'json') {
     return JSON.parse(file)
   }
