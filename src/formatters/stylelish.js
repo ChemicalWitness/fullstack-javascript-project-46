@@ -15,7 +15,6 @@ const stringifyStylish = (value, depth) => {
   const lines = Object.entries(value).map(
     ([key, val]) => `${currentIndent}${key}: ${stringifyStylish(val, depth + 1)}`,
   )
-  console.log(lines)
 
   return ['{', ...lines, `${bracketIndent}}`].join('\n')
 }
