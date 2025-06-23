@@ -9,26 +9,10 @@ const __dirname = dirname(__filename)
 const getFixturePath = filename => path.join(__dirname, '..', '__fixtures__', filename)
 
 describe('gendiff', () => {
-  // test('should show differences between two flat JSON files', () => {
-  //   const file1 = getFixturePath('file1.json')
-  //   const file2 = getFixturePath('file2.json')
-  //   const expected = fs.readFileSync(getFixturePath('expected_diff.txt'), 'utf-8').trim()
-  //   expect(gendiff(file1, file2)).toEqual(expected)
-  // })
-
-  test('should show differences between two JSON files', () => {
+  test('should show differences between two JSON YAML files', () => {
     const file1 = getFixturePath('file1.1.json')
-    const file2 = getFixturePath('file2.1.json')
+    const file2 = getFixturePath('file2.1.yaml')
     const expected = fs.readFileSync(getFixturePath('expected_diff2.txt'), 'utf-8').trim()
     expect(gendiff(file1, file2)).toEqual(expected)
   })
-
-  //Доки витеста, способ найти чтобы укоротить тесты
-
-  // test('should show differences between two flat YAML files', () => {
-  //   const file1 = getFixturePath('file1.yaml')
-  //   const file2 = getFixturePath('file2.yaml')
-  //   const expected = fs.readFileSync(getFixturePath('expected_diff.txt'), 'utf-8').trim()
-  //   expect(gendiff(file1, file2)).toEqual(expected)
-  // })
 })
