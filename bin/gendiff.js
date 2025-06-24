@@ -1,4 +1,5 @@
 #!/usr/bin/env node
 import { runCommander } from '../src/gendiff.js'
 
-export const program = runCommander()
+const program = runCommander()
+program.parse(process.argv)
