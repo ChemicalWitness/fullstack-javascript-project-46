@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
 import fs from 'fs'
-import { gendiff } from '../src/gendiff.js'
+import gendiff from '../index.js'
 import { describe, expect, test } from 'vitest'
 
 const __filename = fileURLToPath(import.meta.url)
