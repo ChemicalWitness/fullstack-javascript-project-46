@@ -2,7 +2,6 @@
 import { Command } from 'commander'
 import gendiff from '../index.js'
 
-// const runCommander = () => {
 const program = new Command()
 
 program
@@ -16,8 +15,4 @@ program
     console.log(gendiff(filepath1, filepath2, options.format))
   })
 
-  // return program
-// }
-
-// const program = runCommander()
 program.parse(process.argv)
