@@ -1,4 +1,4 @@
-import { nodeTypes } from '../gendiff.js'
+import { nodeTypes } from '../buildDiff.js'
 
 const stringifyPlain = (value) => {
   if (value === null) {

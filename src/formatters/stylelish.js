@@ -1,4 +1,4 @@
-import { nodeTypes } from '../gendiff.js'
+import { nodeTypes } from '../buildDiff.js'
 import formatter from '../formatter.js'
 
 const stringifyStylish = (value, depth) => {
@@ -35,7 +35,7 @@ const formatStylish = (nodes, depth = 1) => {
           `${currentIndent}+ ${node.key}: ${stringifyStylish(node.valueObj2, depth + 1)}`,
         ]
       case nodeTypes.NESTED:
-        return `${currentIndent}  ${node.key}: ${formatter(node.children, depth + 1)}`
+        return `${currentIndent}  ${node.key}: ${formatter(node.children, 'stylish', depth + 1)}`
       default:
         return `${currentIndent}  ${node.key}: ${stringifyStylish(node.valueObj2, depth + 1)}`
     }

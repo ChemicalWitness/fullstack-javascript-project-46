@@ -1,51 +1,23 @@
-import _ from 'lodash'
-import { parse, getFormat, readFile } from './parse.js'
+import path from 'path'
+import { parse, readFile } from './parse.js'
 import formatter from './formatter.js'
+import { buildDiff } from './buildDiff.js'
 
-const nodeTypes = {
-  ADDED: 'added',
-  REMOVE: 'remove',
-  CHANGE: 'change',
-  UNCHANGED: 'unchanged',
-  NESTED: 'nested',
+const getFormat = (filepath) => {
+  const ext = path.extname(filepath).slice(1).toLowerCase()
+  return ext
+}
+
+const getData = (filepath) => {
+  const data = parse(readFile(filepath), getFormat(filepath))
+  return data
 }
 
 const gendiff = (filepath1, filepath2, format = 'stylish') => {
-  const data1 = parse(readFile(filepath1), getFormat(filepath1))
-  const data2 = parse(readFile(filepath2), getFormat(filepath2))
+  const data1 = getData(filepath1)
+  const data2 = getData(filepath2)
   const diff = buildDiff(data1, data2)
-  return formatter(diff, 1, format)
+  return formatter(diff, format)
 }
 
-const buildDiff = (data1, data2) => {
-  const keysObj1 = Object.keys(data1)
-  const keysObj2 = Object.keys(data2)
-
-  const uniqKeys = _.sortBy(Array.from(new Set([...keysObj1, ...keysObj2])))
-  const diffLines = uniqKeys.map((key) => {
-    const hasKeyInObj1 = keysObj1.includes(key)
-    const hasKeyInObj2 = keysObj2.includes(key)
-    const valueObj1 = data1[key]
-    const valueObj2 = data2[key]
-
-    if (!hasKeyInObj2) {
-      return { type: nodeTypes.REMOVE, key, valueObj1 }
-    }
-    if (!hasKeyInObj1) {
-      return { type: nodeTypes.ADDED, key, valueObj2 }
-    }
-    if (_.isObject(valueObj1) && _.isObject(valueObj2)) {
-      return { type: nodeTypes.NESTED, key, children: buildDiff(valueObj1, valueObj2) }
-    }
-    if (!_.isEqual(valueObj1, valueObj2)) {
-      return { type: nodeTypes.CHANGE, key, valueObj1, valueObj2 }
-    }
-    if (valueObj1 === valueObj2) {
-      return { type: nodeTypes.UNCHANGED, key, valueObj2 }
-    }
-  })
-
-  return diffLines
-}
-
-export { gendiff, nodeTypes }
+export { gendiff }

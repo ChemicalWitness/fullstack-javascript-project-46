@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm ci
+      - run: make install
       - run: make lint
-      - run: npx vitest
-      - run: npx vitest --coverage
+      - run: make test
+      - run: make test --coverage
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:

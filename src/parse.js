@@ -17,14 +17,4 @@ const parse = (file, format) => {
   return new Error('invalid format')
 }
 
-const getFormat = (filepath) => {
-  const ext = path.extname(filepath).slice(1).toLowerCase()
-  return ext
-}
-
-const getData = (filepath) => {
-  const data = parse(readFile(filepath), getFormat(filepath))
-  return data
-}
-
-export { readFile, parse, getFormat, getData }
+export { readFile, parse }
