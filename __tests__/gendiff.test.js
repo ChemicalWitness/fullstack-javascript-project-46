@@ -8,51 +8,22 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const getFixturePath = filename => path.join(__dirname, '..', '__fixtures__', filename)
 
+const expectedStylish = fs.readFileSync(getFixturePath('expected_diff_stylish.txt'), 'utf-8').trim()
+const expectedPlain = fs.readFileSync(getFixturePath('expected_diff_plain.txt'), 'utf-8').trim()
+const expectedJson = fs.readFileSync(getFixturePath('expected_diff.json'), 'utf-8').trim()
+const formatsFile = ['json', 'yaml']
+const formats = [
+  { name: 'Stylish', format: 'stylish', expected: expectedStylish },
+  { name: 'Plain', format: 'plain', expected: expectedPlain },
+  { name: 'Json', format: 'json', expected: expectedJson },
+]
+
 describe('gendiff', () => {
-  test('should show differences between two JSON YAML files format stylish', () => {
-    const file1 = getFixturePath('file1.json')
-    const file2 = getFixturePath('file2.yaml')
-    const expected = fs.readFileSync(getFixturePath('expected_diff_stylish.txt'), 'utf-8').trim()
-    expect(gendiff(file1, file2)).toEqual(expected)
-  }),
-  test('should show differences between two JSON YAML files format stylish', () => {
-    const file1 = getFixturePath('file1.json')
-    const file2 = getFixturePath('file2.json')
-    const expected = fs.readFileSync(getFixturePath('expected_diff_stylish.txt'), 'utf-8').trim()
-    expect(gendiff(file1, file2)).toEqual(expected)
-  }),
-  test('should show differences between two YAML files format stylish', () => {
-    const file1 = getFixturePath('file1.yaml')
-    const file2 = getFixturePath('file2.yaml')
-    const expected = fs.readFileSync(getFixturePath('expected_diff_stylish.txt'), 'utf-8').trim()
-    expect(gendiff(file1, file2)).toEqual(expected)
-  }),
-  test('should show differences between two JSON YAML files format plain', () => {
-    const file1 = getFixturePath('file1.json')
-    const file2 = getFixturePath('file2.yaml')
-    const format = 'plain'
-    const expected = fs.readFileSync(getFixturePath('expected_diff_plain.txt'), 'utf-8').trim()
-    expect(gendiff(file1, file2, format)).toEqual(expected)
-  }),
-  test('should show differences between two JSON files format plain', () => {
-    const file1 = getFixturePath('file1.json')
-    const file2 = getFixturePath('file2.json')
-    const format = 'plain'
-    const expected = fs.readFileSync(getFixturePath('expected_diff_plain.txt'), 'utf-8').trim()
-    expect(gendiff(file1, file2, format)).toEqual(expected)
-  }),
-  test('should show differences between two YAML files format plain', () => {
-    const file1 = getFixturePath('file1.yaml')
-    const file2 = getFixturePath('file2.yaml')
-    const format = 'plain'
-    const expected = fs.readFileSync(getFixturePath('expected_diff_plain.txt'), 'utf-8').trim()
-    expect(gendiff(file1, file2, format)).toEqual(expected)
-  }),
-  test('should show differences betweew two files on json format', () => {
-    const file1 = getFixturePath('file1.json')
-    const file2 = getFixturePath('file2.yaml')
-    const format = 'json'
-    const expected = fs.readFileSync(getFixturePath('expected_diff.json'), 'utf-8').trim()
-    expect(gendiff(file1, file2, format)).toEqual(expected)
+  formats.forEach(({ name, format, expected }) => {
+    test.each(formatsFile)(`test ${name}`, (file) => {
+      const file1 = getFixturePath(`file1.${file}`)
+      const file2 = getFixturePath(`file2.${file}`)
+      expect(gendiff(file1, file2, format)).toEqual(expected)
+    })
   })
 })
