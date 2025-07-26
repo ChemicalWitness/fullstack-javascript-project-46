@@ -1,8 +1,8 @@
 lint:
-		npx eslint .
+			npx eslint .
 test:
-		npm test
+			npm test
 test-coverage:
-		npm test --coverage
+			npm test -- --coverage
 install:
-		npm ci
+			npm ci
