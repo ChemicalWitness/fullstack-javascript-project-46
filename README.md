@@ -3,14 +3,21 @@
 [![Actions Status](https://github.com/ChemicalWitness/fullstack-javascript-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/ChemicalWitness/fullstack-javascript-project-46/actions)
 
 # fullstack-javascript-project-46
-# Gendiff
-## Formats:
-#### -f stylish
-#### -f plain
-#### -f json
+# Gendiff (Вычислитель отличий)
+## Вычислитель отличий – программа, определяющая разницу между двумя структурами данных. Это популярная задача, для решения которой существует множество онлайн сервисов, например http://www.jsondiff.com/. Подобный механизм используется при выводе тестов или при автоматическом отслеживании изменений в конфигурационных файлах. 
 
 ## Requirements:
 Use NODE.JS 20.8 or higher
+
+## Gendiff help command(Команда вызова помощи в использовании)
+### gendiff -h
+
+## Formats(Форматтеры для вывода результата):
+
+### Commands(Команды)
+#### gendiff <filepath1> <filepath2> -f stylish
+#### gendiff <filepath1> <filepath2> -f plain
+#### gendiff <filepath1> <filepath2> -f json
 
 #### Example
 [![asciicast](https://asciinema.org/a/3heOBGUbi6SXcidFul97j4ffC.svg)](https://asciinema.org/a/3heOBGUbi6SXcidFul97j4ffC)
