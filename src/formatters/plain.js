@@ -10,7 +10,12 @@ const stringifyPlain = (value) => {
   return typeof value !== 'string' ? `${value}` : `'${value}'`
 }
 
-const buildPath = (path, key) => path ? `${path}.${key}` : key
+const buildPath = (path, key) => {
+  if (path) {
+    return [path, key].join('.')
+  }
+  return key
+}
 
 const formatPlain = (nodes, path = '') => {
   const diff = nodes.flatMap((node) => {
