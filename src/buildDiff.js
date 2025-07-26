@@ -13,7 +13,7 @@ const buildDiff = (data1, data2) => {
   const keysObj2 = Object.keys(data2)
   console.log(keysObj1)
 
-  const uniqKeys = _.sortBy(Array.from(new Set([...keysObj1, ...keysObj2])))
+  const uniqKeys = Array.from(new Set([...keysObj1, ...keysObj2])).toSorted()
   const diffLines = uniqKeys.map((key) => {
     const valueObj1 = data1[key]
     const valueObj2 = data2[key]
