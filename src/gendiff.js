@@ -1,7 +1,13 @@
 import path from 'path'
-import { parse, readFile } from './parse.js'
+import fs from 'fs'
+import parse from './parse.js'
 import formatter from './formatter.js'
 import { buildDiff } from './buildDiff.js'
+
+const readFile = (filepath) => {
+  const absolutePath = path.resolve(process.cwd(), filepath)
+  return fs.readFileSync(absolutePath, 'utf-8')
+}
 
 const getFormat = (filepath) => {
   const ext = path.extname(filepath).slice(1).toLowerCase()
