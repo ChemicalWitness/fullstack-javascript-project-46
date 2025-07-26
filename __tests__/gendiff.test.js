@@ -18,12 +18,18 @@ const formats = [
   { name: 'Json', format: 'json', expected: expectedJson },
 ]
 
+const testCases = formats.flatMap(({ name, format, expected }) =>
+  formatsFile.map(file => ({
+    name,
+    format,
+    expected,
+    file,
+  })))
+
 describe('gendiff', () => {
-  formats.forEach(({ name, format, expected }) => {
-    test.each(formatsFile)(`test ${name}`, (file) => {
-      const file1 = getFixturePath(`file1.${file}`)
-      const file2 = getFixturePath(`file2.${file}`)
-      expect(gendiff(file1, file2, format)).toEqual(expected)
-    })
+  test.each(testCases)('test $name for $file', ({ format, expected, file }) => {
+    const file1 = getFixturePath(`file1.${file}`)
+    const file2 = getFixturePath(`file2.${file}`)
+    expect(gendiff(file1, file2, format)).toEqual(expected)
   })
 })
