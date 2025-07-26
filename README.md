@@ -15,9 +15,9 @@ Use NODE.JS 20.8 or higher
 ## Formats(Форматтеры для вывода результата):
 
 ### Commands(Команды)
-#### gendiff <filepath1> <filepath2> -f stylish
-#### gendiff <filepath1> <filepath2> -f plain
-#### gendiff <filepath1> <filepath2> -f json
+#### gendiff filepath1 filepath2 -f stylish
+#### gendiff filepath1 filepath2 -f plain
+#### gendiff filepath1 filepath2 -f json
 
 #### Example
 [![asciicast](https://asciinema.org/a/3heOBGUbi6SXcidFul97j4ffC.svg)](https://asciinema.org/a/3heOBGUbi6SXcidFul97j4ffC)
