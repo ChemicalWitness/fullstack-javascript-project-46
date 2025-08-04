@@ -10,16 +10,9 @@ const stringifyPlain = (value) => {
   return typeof value !== 'string' ? `${value}` : `'${value}'`
 }
 
-const buildPath = (path, key) => {
-  if (path) {
-    return [path, key].join('.')
-  }
-  return key
-}
-
-const formatPlain = (nodes, path = '') => {
+const formatPlain = (nodes, path = []) => {
   const diff = nodes.flatMap((node) => {
-    const currentPath = buildPath(path, node.key)
+    const currentPath = [...path, node.key].join('.')
     switch (node.type) {
       case nodeTypes.REMOVE:
         return `Property '${currentPath}' was removed`
@@ -28,7 +21,7 @@ const formatPlain = (nodes, path = '') => {
       case nodeTypes.CHANGE:
         return `Property '${currentPath}' was updated. From ${stringifyPlain(node.valueObj1)} to ${stringifyPlain(node.valueObj2)}`
       case nodeTypes.NESTED:
-        return formatPlain(node.children, currentPath)
+        return formatPlain(node.children, [...path, node.key])
       case nodeTypes.UNCHANGED:
         return []
     }

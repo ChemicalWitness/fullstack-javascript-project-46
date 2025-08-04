@@ -10,34 +10,34 @@ const stringifyStylish = (value, depth) => {
   }
 
   const lines = Object.entries(value).map(
-    ([key, val]) => `${buildIndent(depth)}${key}: ${stringifyStylish(val, depth + 1)}`,
+    ([key, val]) => `${buildIndent(depth + 1)}${key}: ${stringifyStylish(val, depth + 1)}`,
   )
 
-  return ['{', ...lines, `${buildIndent(depth - 1)}}`].join('\n')
+  return ['{', ...lines, `${buildIndent(depth)}}`].join('\n')
 }
 
-const buildIndent = (depth) => {
-  const indentSize = depth * 4
+const buildIndent = (depth, isSign = false) => {
+  const indentSize = depth * 4 - (isSign ? 2 : 0)
   return ' '.repeat(indentSize)
 }
 
-const formatStylish = (nodes, depth = 1) => {
-  const indent = buildIndent(depth).slice(0, -2)
+const formatStylish = (nodes, depth) => {
+  const indent = buildIndent(depth, true)
   const diff = nodes.flatMap((node) => {
     switch (node.type) {
       case nodeTypes.REMOVE:
-        return `${indent}- ${node.key}: ${stringifyStylish(node.valueObj1, depth + 1)}`
+        return `${indent}- ${node.key}: ${stringifyStylish(node.valueObj1, depth)}`
       case nodeTypes.ADDED:
-        return `${indent}+ ${node.key}: ${stringifyStylish(node.valueObj2, depth + 1)}`
+        return `${indent}+ ${node.key}: ${stringifyStylish(node.valueObj2, depth)}`
       case nodeTypes.CHANGE:
         return [
-          `${indent}- ${node.key}: ${stringifyStylish(node.valueObj1, depth + 1)}`,
-          `${indent}+ ${node.key}: ${stringifyStylish(node.valueObj2, depth + 1)}`,
+          `${indent}- ${node.key}: ${stringifyStylish(node.valueObj1, depth)}`,
+          `${indent}+ ${node.key}: ${stringifyStylish(node.valueObj2, depth)}`,
         ]
       case nodeTypes.NESTED:
         return `${indent}  ${node.key}: ${formatter(node.children, 'stylish', depth + 1)}`
       default:
-        return `${indent}  ${node.key}: ${stringifyStylish(node.valueObj2, depth + 1)}`
+        return `${indent}  ${node.key}: ${stringifyStylish(node.valueObj2, depth)}`
     }
   })
 
