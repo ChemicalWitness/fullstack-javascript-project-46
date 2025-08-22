@@ -1,5 +1,4 @@
 import { nodeTypes } from '../buildDiff.js'
-import formatter from '../formatter.js'
 
 const stringifyStylish = (value, depth) => {
   if (value === null) {
@@ -10,20 +9,20 @@ const stringifyStylish = (value, depth) => {
   }
 
   const lines = Object.entries(value).map(
-    ([key, val]) => `${buildIndent(depth + 1)}${key}: ${stringifyStylish(val, depth + 1)}`,
+    ([key, val]) => `${buildIndent(depth + 1)}  ${key}: ${stringifyStylish(val, depth + 1)}`,
   )
 
-  return ['{', ...lines, `${buildIndent(depth)}}`].join('\n')
+  return ['{', ...lines, `${buildIndent(depth)}  }`].join('\n')
 }
 
-const buildIndent = (depth, isSign = false) => {
-  const indentSize = depth * 4 - (isSign ? 2 : 0)
+const buildIndent = (depth) => {
+  const indentSize = depth * 4 - 2
   return ' '.repeat(indentSize)
 }
 
 const formatStylish = (nodes, depth) => {
-  const indent = buildIndent(depth, true)
-  const diff = nodes.flatMap((node) => {
+  const indent = buildIndent(depth)
+  return nodes.flatMap((node) => {
     switch (node.type) {
       case nodeTypes.REMOVE:
         return `${indent}- ${node.key}: ${stringifyStylish(node.valueObj1, depth)}`
@@ -35,13 +34,11 @@ const formatStylish = (nodes, depth) => {
           `${indent}+ ${node.key}: ${stringifyStylish(node.valueObj2, depth)}`,
         ]
       case nodeTypes.NESTED:
-        return `${indent}  ${node.key}: ${formatter(node.children, 'stylish', depth + 1)}`
+        return `${indent}  ${node.key}: {\n${formatStylish(node.children, depth + 1).join('\n')}\n${indent}  }`
       default:
         return `${indent}  ${node.key}: ${stringifyStylish(node.valueObj2, depth)}`
     }
   })
-
-  return [`{`, ...diff, `${buildIndent(depth - 1)}}`].join('\n')
 }
 
-export default formatStylish
+export default (nodes, depth) => `{\n${formatStylish(nodes, depth).join('\n')}\n}`
